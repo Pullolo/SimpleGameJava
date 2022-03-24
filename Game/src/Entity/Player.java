@@ -16,6 +16,9 @@ public class Player extends Entity implements Damageable{
     private BufferedImage right, left;
     private String direction;
 
+    private final int screenX;
+    private final int screenY;
+
     public void setImgs(){
         try {
             right = ImageIO.read(getClass().getClassLoader().getResource("PlayerAssets/player1.png"));
@@ -26,6 +29,8 @@ public class Player extends Entity implements Damageable{
     }
 
     public Player(GamePanel gp, KeyHandlerClass keyH){
+        screenX = gp.getWidth()/2;
+        screenY = gp.getHeight()/2;
         this.gp = gp;
         this.keyH = keyH;
         setDefaultValues();
@@ -34,6 +39,8 @@ public class Player extends Entity implements Damageable{
 
     Player(int x, int y, int speed, int health, GamePanel gp, KeyHandlerClass keyH){
         super(x, y, speed);
+        screenX = gp.getWidth()/2;
+        screenY = gp.getHeight()/2;
         this.health = health;
         this.gp = gp;
         this.keyH = keyH;
@@ -76,7 +83,7 @@ public class Player extends Entity implements Damageable{
                 break;
         }
 
-        g2.drawImage(img, this.getX(), this.getY(), gp.tileSize, gp.tileSize, null);
+        g2.drawImage(img, screenX-(gp.getTileSize()/2), screenY-gp.getTileSize(), gp.getTileSize(), gp.getTileSize(), null);
     }
 
     @Override
@@ -92,5 +99,13 @@ public class Player extends Entity implements Damageable{
     @Override
     public int getHealth() {
         return health;
+    }
+
+    public int getScreenX() {
+        return screenX;
+    }
+
+    public int getScreenY() {
+        return screenY;
     }
 }
